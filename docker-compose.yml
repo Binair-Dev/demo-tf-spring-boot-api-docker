@@ -1,0 +1,35 @@
+version: "2.1"
+
+services:
+  springboot-api-demo:
+    container_name: "springboot-api-demo"
+    image: "8aee716bc2e876521d346d9eb4aab1598e905dd89dab4ba478cf5a9de9e74461"
+    mem_limit: 1024m
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./.env
+    environment:
+      SPRING_DATASOURCE_URL: $SPRING_DATASOURCE_URL
+      SPRING_DATASOURCE_USERNAME: $SPRING_DATASOURCE_USERNAME
+      SPRING_DATASOURCE_PASSWORD: $SPRING_DATASOURCE_PASSWORD
+    networks:
+      - template_network
+
+  postgres:
+    container_name: postgres_database
+    image: postgres:latest
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_ROOT_PASSWORD: $POSTGRES_ROOT_PASSWORD
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    networks:
+      - template_network
+    volumes:
+      - ./create_database.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+networks:
+  template_network:
+    driver: bridge

@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/wiki
+    username: postgres
+    password: test1234@
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+      path: /swagger-ui.html
